@@ -1,3 +1,7 @@
+# care-inc-ims-backend
+
+Capstone Project for SAIT PROJ 309-SDB: Care Inc. Audiology Inventory Management System. Backend repo.
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
