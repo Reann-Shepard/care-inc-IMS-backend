@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  password String
+
+  @@map("user")
+}
+
+model Manufacturer {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  devices           Device[]
+  OrderManufacturer OrderManufacturer[]
+  repair            Repair[]
+
+  @@map("manufacturer")
+}
+
+model Color {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  devices            Device[]
+  OrderManufacturers OrderManufacturer[]
+
+  @@map("color")
+}
+
+model Type {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  devices            Device[]
+  OrderManufacturers OrderManufacturer[]
+
+  @@map("type")
+}
+
+model Device {
+  id             Int            @id @default(autoincrement())
+  serialNumber   String         @unique
+  manufacturerId Int
+  colorId        Int
+  typeId         Int
+  stockInDate    DateTime
+  sellDate       DateTime?
+  packageId      Int?
+  OrderDevice    OrderDevice[]
+  color          Color          @relation(fields: [colorId], references: [id])
+  manufacturer   Manufacturer   @relation(fields: [manufacturerId], references: [id])
+  package        Package?       @relation(fields: [packageId], references: [id])
+  type           Type           @relation(fields: [typeId], references: [id])
+  repairDevices  RepairDevice[]
+
+  @@map("device")
+}
+
+model OrderDevice {
+  deviceId            Int
+  orderManufacturerId Int
+  device              Device            @relation(fields: [deviceId], references: [id])
+  orderManufacturer   OrderManufacturer @relation(fields: [orderManufacturerId], references: [id])
+
+  @@id([deviceId, orderManufacturerId])
+  @@map("order_device")
+}
+
+model OrderManufacturer {
+  id             Int           @id @default(autoincrement())
+  manufacturerId Int
+  colorId        Int
+  typeId         Int
+  orderDate      DateTime
+  amount         Int
+  OrderDevices   OrderDevice[]
+  color          Color         @relation(fields: [colorId], references: [id])
+  manufacturer   Manufacturer  @relation(fields: [manufacturerId], references: [id])
+  type           Type          @relation(fields: [typeId], references: [id])
+
+  @@map("order_manufacturer")
+}
+
+model Client {
+  id       Int       @id
+  packages Package[]
+  repairs  Repair[]
+
+  @@map("client")
+}
+
+model Repair {
+  id             Int            @id @default(autoincrement())
+  clientId       Int
+  manufacturerId Int
+  reason         String
+  shippingDate   DateTime
+  shipId         String
+  receivedDate   DateTime?
+  client         Client         @relation(fields: [clientId], references: [id])
+  manufacturer   Manufacturer   @relation(fields: [manufacturerId], references: [id])
+  repairDevices  RepairDevice[]
+
+  @@map("repair")
+}
+
+model RepairDevice {
+  id       Int    @id @default(autoincrement())
+  repairId Int
+  deviceId Int
+  device   Device @relation(fields: [deviceId], references: [id])
+  repair   Repair @relation(fields: [repairId], references: [id])
+
+  @@map("repair_device")
+}
+
+model OrderCustomer {
+  id         Int       @id @default(autoincrement())
+  orderDate  DateTime
+  orderTotal Int
+  amount     Decimal   @db.Decimal(10, 2)
+  rebate     Decimal   @db.Decimal(10, 2)
+  finalPaid  Decimal   @db.Decimal(10, 2)
+  packages   Package[]
+
+  @@map("order_customer")
+}
+
+model Package {
+  id                 Int           @id @default(autoincrement())
+  clientId           Int
+  fittingDate        DateTime
+  warrantyExpiration DateTime
+  orderCustomerId    Int
+  devices            Device[]
+  client             Client        @relation(fields: [clientId], references: [id])
+  orderCustomer      OrderCustomer @relation(fields: [orderCustomerId], references: [id])
+
+  @@map("package")
+}
