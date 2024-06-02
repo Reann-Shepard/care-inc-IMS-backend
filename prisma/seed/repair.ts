@@ -42,9 +42,3 @@ export async function seedRepairs() {
     }
   }
 }
-
-seedRepairs()
-  .catch((e) => console.error(e))
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
