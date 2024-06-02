@@ -130,7 +130,6 @@ model OrderCustomer {
   id         Int       @id @default(autoincrement())
   orderDate  DateTime
   orderTotal Int
-  amount     Decimal   @db.Decimal(10, 2)
   rebate     Decimal   @db.Decimal(10, 2)
   finalPaid  Decimal   @db.Decimal(10, 2)
   packages   Package[]
