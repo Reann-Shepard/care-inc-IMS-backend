@@ -14,16 +14,16 @@ import { seedRepairDevices } from './seed/repairDevice';
 const prisma = new PrismaClient();
 
 async function main() {
-  await seedOrderCustomers();
   await seedClients();
   await seedManufacturers();
   await seedColors();
   await seedTypes();
+  await seedOrderCustomers();
   await seedPackages();
   await seedDevices();
   await seedOrderManufacturers();
-  await seedRepairs();
   await seedOrderDevices();
+  await seedRepairs();
   await seedRepairDevices();
 }
 

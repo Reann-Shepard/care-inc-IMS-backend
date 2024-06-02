@@ -47,9 +47,3 @@ export async function seedOrderDevices() {
     }
   }
 }
-
-seedOrderDevices()
-  .catch((e) => console.error(e))
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
