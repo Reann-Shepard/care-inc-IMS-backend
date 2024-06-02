@@ -143,6 +143,7 @@ model Package {
   fittingDate        DateTime
   warrantyExpiration DateTime
   orderCustomerId    Int
+  comments           String?
   devices            Device[]
   client             Client        @relation(fields: [clientId], references: [id])
   orderCustomer      OrderCustomer @relation(fields: [orderCustomerId], references: [id])
