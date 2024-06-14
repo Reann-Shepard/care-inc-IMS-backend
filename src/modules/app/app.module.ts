@@ -11,6 +11,12 @@ import { ManufacturerController } from '../manufacturer/manufacturer.controller'
 import { ManufacturerService } from '../manufacturer/manufacturer.service';
 import { PackageController } from '../package/package.controller';
 import { PackageService } from '../package/package.service';
+import { ColorController } from '../color/color.controller';
+import { ColorService } from '../color/color.service';
+import { TypeController } from '../type/type.controller';
+import { TypeService } from '../type/type.service';
+import { ClientController } from '../client/client.controller';
+import { ClientService } from '../client/client.service';
 
 @Module({
   imports: [PrismaModule, DeviceModule, ConfigModule.forRoot()],
@@ -19,6 +25,9 @@ import { PackageService } from '../package/package.service';
     DeviceController,
     ManufacturerController,
     PackageController,
+    ColorController,
+    TypeController,
+    ClientController,
   ],
   providers: [
     AppService,
@@ -26,6 +35,9 @@ import { PackageService } from '../package/package.service';
     DeviceService,
     ManufacturerService,
     PackageService,
+    ColorService,
+    TypeService,
+    ClientService,
   ],
 })
 export class AppModule {}
