@@ -9,10 +9,23 @@ import { DeviceService } from '../device/device.service';
 import { ConfigModule } from '@nestjs/config';
 import { ManufacturerController } from '../manufacturer/manufacturer.controller';
 import { ManufacturerService } from '../manufacturer/manufacturer.service';
+import { InventoryController } from '../inventory/inventory.controller';
+import { InventoryService } from '../inventory/inventory.service';
 
 @Module({
   imports: [PrismaModule, DeviceModule, ConfigModule.forRoot()],
-  controllers: [AppController, DeviceController, ManufacturerController],
-  providers: [AppService, PrismaService, DeviceService, ManufacturerService],
+  controllers: [
+    AppController,
+    DeviceController,
+    ManufacturerController,
+    InventoryController,
+  ],
+  providers: [
+    AppService,
+    PrismaService,
+    DeviceService,
+    ManufacturerService,
+    InventoryService,
+  ],
 })
 export class AppModule {}
