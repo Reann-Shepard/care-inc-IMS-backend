@@ -8,4 +8,12 @@ export class OrderCustomerService {
   async getAllOrderCustomers() {
     return this.prisma.orderCustomer.findMany();
   }
+
+  async getOrderCustomerById(id: number) {
+    return this.prisma.orderCustomer.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
 }
