@@ -20,7 +20,7 @@ module.exports = {
     quotes: ['error', 'single'], // "" => ''
     semi: ['error', 'always'], // semicolon
     'no-empty': 'error', // No empty in bracket
-    indent: ['error', 2, { SwitchCase: 1 }],
+    indent: 'off',
     'comma-dangle': ['error', 'only-multiline'], // Ex) { a, b, }
     'object-curly-spacing': ['error', 'always'], // Space between { },
     'no-multi-spaces': 'error', // Ex) var a =  1 => var a = 1
