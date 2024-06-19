@@ -17,6 +17,8 @@ import { TypeController } from '../type/type.controller';
 import { TypeService } from '../type/type.service';
 import { ClientController } from '../client/client.controller';
 import { ClientService } from '../client/client.service';
+import { OrderCustomerController } from '../orderCustomer/orderCustomer.controller';
+import { OrderCustomerService } from '../orderCustomer/orderCustomer.service';
 
 @Module({
   imports: [PrismaModule, DeviceModule, ConfigModule.forRoot()],
@@ -28,6 +30,7 @@ import { ClientService } from '../client/client.service';
     ColorController,
     TypeController,
     ClientController,
+    OrderCustomerController,
   ],
   providers: [
     AppService,
@@ -38,6 +41,7 @@ import { ClientService } from '../client/client.service';
     ColorService,
     TypeService,
     ClientService,
+    OrderCustomerService,
   ],
 })
 export class AppModule {}
