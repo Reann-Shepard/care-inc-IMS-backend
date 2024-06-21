@@ -9,10 +9,46 @@ import { DeviceService } from '../device/device.service';
 import { ConfigModule } from '@nestjs/config';
 import { ManufacturerController } from '../manufacturer/manufacturer.controller';
 import { ManufacturerService } from '../manufacturer/manufacturer.service';
+// import { PackageModule } from '../package/package.module';
+import { PackageController } from '../package/package.controller';
+import { PackageService } from '../package/package.service';
+import { ColorController } from '../color/color.controller';
+import { ColorService } from '../color/color.service';
+import { TypeController } from '../type/type.controller';
+import { TypeService } from '../type/type.service';
+import { ClientController } from '../client/client.controller';
+import { ClientService } from '../client/client.service';
+import { OrderCustomerController } from '../orderCustomer/orderCustomer.controller';
+import { OrderCustomerService } from '../orderCustomer/orderCustomer.service';
+import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
 
 @Module({
-  imports: [PrismaModule, DeviceModule, ConfigModule.forRoot()],
-  controllers: [AppController, DeviceController, ManufacturerController],
-  providers: [AppService, PrismaService, DeviceService, ManufacturerService],
+  imports: [
+    PrismaModule,
+    DeviceModule,
+    OrderCustomerModule,
+    ConfigModule.forRoot(),
+  ],
+  controllers: [
+    AppController,
+    DeviceController,
+    ManufacturerController,
+    PackageController,
+    ColorController,
+    TypeController,
+    ClientController,
+    OrderCustomerController,
+  ],
+  providers: [
+    AppService,
+    PrismaService,
+    DeviceService,
+    ManufacturerService,
+    PackageService,
+    ColorService,
+    TypeService,
+    ClientService,
+    OrderCustomerService,
+  ],
 })
 export class AppModule {}
