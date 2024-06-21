@@ -13,6 +13,18 @@ import { InventoryModule } from './inventory/inventory.module';
 import { ManufacturerModule } from '../manufacturer/manufacturer.module';
 import { InventoryController } from './inventory/inventory.controller';
 import { InventoryService } from './inventory/inventory.service';
+// import { PackageModule } from '../package/package.module';
+import { PackageController } from '../package/package.controller';
+import { PackageService } from '../package/package.service';
+import { ColorController } from '../color/color.controller';
+import { ColorService } from '../color/color.service';
+import { TypeController } from '../type/type.controller';
+import { TypeService } from '../type/type.service';
+import { ClientController } from '../client/client.controller';
+import { ClientService } from '../client/client.service';
+import { OrderCustomerController } from '../orderCustomer/orderCustomer.controller';
+import { OrderCustomerService } from '../orderCustomer/orderCustomer.service';
+import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
 
 @Module({
   imports: [
@@ -27,6 +39,11 @@ import { InventoryService } from './inventory/inventory.service';
     DeviceController,
     ManufacturerController,
     InventoryController,
+    PackageController,
+    ColorController,
+    TypeController,
+    ClientController,
+    OrderCustomerController,
   ],
   providers: [
     AppService,
@@ -34,6 +51,11 @@ import { InventoryService } from './inventory/inventory.service';
     DeviceService,
     ManufacturerService,
     InventoryService,
+    PackageService,
+    ColorService,
+    TypeService,
+    ClientService,
+    OrderCustomerService,
   ],
 })
 export class AppModule {}
