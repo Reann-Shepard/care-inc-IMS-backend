@@ -31,6 +31,7 @@ import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
     PrismaModule,
     DeviceModule,
     ConfigModule.forRoot(),
+    OrderCustomerModule,
     ManufacturerModule,
     InventoryModule,
   ],
