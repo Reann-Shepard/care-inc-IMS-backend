@@ -9,6 +9,10 @@ import { DeviceService } from '../device/device.service';
 import { ConfigModule } from '@nestjs/config';
 import { ManufacturerController } from '../manufacturer/manufacturer.controller';
 import { ManufacturerService } from '../manufacturer/manufacturer.service';
+import { InventoryModule } from './inventory/inventory.module';
+import { ManufacturerModule } from '../manufacturer/manufacturer.module';
+import { InventoryController } from './inventory/inventory.controller';
+import { InventoryService } from './inventory/inventory.service';
 // import { PackageModule } from '../package/package.module';
 import { PackageController } from '../package/package.controller';
 import { PackageService } from '../package/package.service';
@@ -26,13 +30,16 @@ import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
   imports: [
     PrismaModule,
     DeviceModule,
-    OrderCustomerModule,
     ConfigModule.forRoot(),
+    OrderCustomerModule,
+    ManufacturerModule,
+    InventoryModule,
   ],
   controllers: [
     AppController,
     DeviceController,
     ManufacturerController,
+    InventoryController,
     PackageController,
     ColorController,
     TypeController,
@@ -44,6 +51,7 @@ import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
     PrismaService,
     DeviceService,
     ManufacturerService,
+    InventoryService,
     PackageService,
     ColorService,
     TypeService,
