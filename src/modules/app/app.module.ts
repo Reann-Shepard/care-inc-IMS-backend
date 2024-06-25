@@ -9,8 +9,8 @@ import { DeviceService } from '../device/device.service';
 import { ConfigModule } from '@nestjs/config';
 import { ManufacturerController } from '../manufacturer/manufacturer.controller';
 import { ManufacturerService } from '../manufacturer/manufacturer.service';
-import { InventoryController } from '../inventory/inventory.controller';
-import { InventoryService } from '../inventory/inventory.service';
+import { InventoryController } from '../inventory_ov/inventory.controller';
+import { InventoryService } from '../inventory_ov/inventory.service';
 
 @Module({
   imports: [PrismaModule, DeviceModule, ConfigModule.forRoot()],

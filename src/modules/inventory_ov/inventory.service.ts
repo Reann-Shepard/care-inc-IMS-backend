@@ -6,6 +6,6 @@ export class InventoryService {
   constructor(private prisma: PrismaService) {}
 
   async getAllInventory() {
-    return this.prisma.inventory.findMany();
+    return this.prisma.device.findMany();
   }
 }
