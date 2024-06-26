@@ -25,6 +25,7 @@ import { ClientService } from '../client/client.service';
 import { OrderCustomerController } from '../orderCustomer/orderCustomer.controller';
 import { OrderCustomerService } from '../orderCustomer/orderCustomer.service';
 import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
+import { UserModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
     OrderCustomerModule,
     ManufacturerModule,
     InventoryModule,
+    UserModule,
   ],
   controllers: [
     AppController,
