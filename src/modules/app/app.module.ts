@@ -31,6 +31,7 @@ import { RepairModule } from '../repair/repair.module';
 import { OrderManufacturerModule } from '../order-manufacturer/order-manufacturer.module';
 import { OrderManufacturerController } from '../order-manufacturer/order-manufacturer.controller';
 import { OrderManufacturerService } from '../order-manufacturer/order-manufacturer.service';
+import { UserModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { OrderManufacturerService } from '../order-manufacturer/order-manufactur
     InventoryModule,
     RepairModule,
     OrderManufacturerModule,
+    UserModule,
   ],
   controllers: [
     AppController,
