@@ -8,4 +8,12 @@ export class PackageService {
   async getAllPackages() {
     return this.prisma.package.findMany();
   }
+
+  async getPackageSortBy(sortBy: string) {
+    return this.prisma.package.findMany({
+      orderBy: {
+        [sortBy]: 'asc',
+      },
+    });
+  }
 }
