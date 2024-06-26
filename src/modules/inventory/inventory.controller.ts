@@ -19,13 +19,20 @@ export class InventoryController {
 
   @Get('count-device')
   async getDeviceCountByMfr() {
-    const DeviceCount = await this.inventoryService.getDeviceCountByMfr();
-    return DeviceCount;
+    const deviceCount = await this.inventoryService.getDeviceCountByMfr();
+    return deviceCount;
   }
 
   @Get('count-package')
   async getPackageCountByMfr() {
-    const PackageCount = await this.inventoryService.getPackageCountByMfr();
-    return PackageCount;
+    const packageCount = await this.inventoryService.getPackageCountByMfr();
+    return packageCount;
+  }
+
+  @Get('count-alteration')
+  async getAlterationCountByMfr() {
+    const alterationCount =
+      await this.inventoryService.getAlterationCountByMfr();
+    return alterationCount;
   }
 }
