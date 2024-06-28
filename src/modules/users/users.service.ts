@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepository } from './users.repository';
 import { Prisma } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -10,13 +10,13 @@ import { plainToClass } from 'class-transformer';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<UserDto> {
+  private async hashPassword(password: string): Promise<string> {
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(
-      createUserDto.password,
-      saltRounds,
-    );
+    return await bcrypt.hash(password, saltRounds);
+  }
 
+  async createUser(createUserDto: CreateUserDto): Promise<UserDto> {
+    const hashedPassword = await this.hashPassword(createUserDto.password);
     const userCreateInput = { ...createUserDto, password: hashedPassword };
     const user = await this.userRepository.createUser(userCreateInput);
     return new UserDto(user);
@@ -33,6 +33,10 @@ export class UserService {
   }
 
   async updateUser(id: string, data: Prisma.UserUpdateInput) {
+    if (data.password && typeof data.password === 'string') {
+      const hashedPassword = await this.hashPassword(data.password);
+      data.password = { set: hashedPassword };
+    }
     const user = await this.userRepository.updateUser(id, data);
     return plainToClass(UserDto, user);
   }
