@@ -47,4 +47,11 @@ export class OrderManufacturerService {
       },
     });
   }
+
+  async updateManufacturer(id: number, updateData: any) {
+    return this.prisma.manufacturer.update({
+      where: { id },
+      data: updateData,
+    });
+  }
 }
