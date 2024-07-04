@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/modules/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class InventoryService {
@@ -93,5 +93,29 @@ export class InventoryService {
       name,
       count,
     }));
+  }
+
+  async getAlterationCountByMfr() {
+    const result = await this.prisma.repair.groupBy({
+      by: ['manufacturerId'],
+      _count: {
+        manufacturerId: true,
+      },
+    });
+
+    const alterationCounts = await Promise.all(
+      result.map(async (repair) => {
+        const manufacturer = await this.prisma.manufacturer.findUnique({
+          where: { id: repair.manufacturerId },
+        });
+
+        return {
+          name: manufacturer.name,
+          count: repair._count.manufacturerId,
+        };
+      }),
+    );
+
+    return alterationCounts;
   }
 }
