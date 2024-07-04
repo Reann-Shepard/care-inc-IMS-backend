@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
-import { InventoryService } from './inventory.service';
+import { InventoryOvService } from './inventory.service';
 
 @Controller('inventory')
 export class InventoryController {
-  constructor(private readonly inventoryService: InventoryService) {}
+  constructor(private readonly inventoryService: InventoryOvService) {}
 
   @Get()
   getAllInventory() {
