@@ -1,5 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { PackageService } from './package.service';
+import { Prisma } from '@prisma/client';
 
 @Controller('package')
 export class PackageController {
@@ -39,4 +40,9 @@ export class PackageController {
       console.log(error);
     }
   }
+
+  // @Post()
+  // createPackage(@Body() data: Prisma.PackageCreateInput) {
+  //   return this.packageService.create(data);
+  // }
 }

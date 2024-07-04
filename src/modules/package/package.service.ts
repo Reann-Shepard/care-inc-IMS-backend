@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PackageService {
@@ -37,4 +38,10 @@ export class PackageService {
       },
     });
   }
+
+  // async create(data: Prisma.PackageCreateInput) {
+  //   return this.prisma.package.create({
+  //     data,
+  //   });
+  // }
 }
