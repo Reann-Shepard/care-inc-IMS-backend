@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateInventoryDto } from './dto/create-inventory.dto';
 
 @Injectable()
 export class InventoryService {
@@ -77,7 +78,7 @@ export class InventoryService {
       },
     });
 
-    const pakageCounts = result.reduce((acc, pkg) => {
+    const packageCounts = result.reduce((acc, pkg) => {
       const manufacturer = pkg.devices[0].manufacturer.name;
 
       if (acc[manufacturer]) {
@@ -89,7 +90,7 @@ export class InventoryService {
       return acc;
     }, {});
 
-    return Object.entries(pakageCounts).map(([name, count]) => ({
+    return Object.entries(packageCounts).map(([name, count]) => ({
       name,
       count,
     }));
@@ -117,5 +118,27 @@ export class InventoryService {
     );
 
     return alterationCounts;
+  }
+
+  async addInventory(createInventoryDto: CreateInventoryDto) {
+    const newDevice = await this.prisma.device.create({
+      data: {
+        serialNumber: createInventoryDto.serialNumber,
+        stockInDate: new Date(createInventoryDto.stockInDate),
+        sellDate: createInventoryDto.sellDate
+          ? new Date(createInventoryDto.sellDate)
+          : null,
+        color: {
+          connect: { name: createInventoryDto.color },
+        },
+        manufacturer: {
+          connect: { name: createInventoryDto.manufacturer },
+        },
+        type: {
+          connect: { name: createInventoryDto.type },
+        },
+      },
+    });
+    return newDevice;
   }
 }

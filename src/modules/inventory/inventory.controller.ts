@@ -1,5 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { InventoryService } from './inventory.service';
+import { CreateInventoryDto } from './dto/create-inventory.dto';
 
 @Controller('inventory')
 export class InventoryController {
@@ -34,5 +42,19 @@ export class InventoryController {
     const alterationCount =
       await this.inventoryService.getAlterationCountByMfr();
     return alterationCount;
+  }
+
+  @Post('add')
+  async addInventory(@Body() createInventoryDto: CreateInventoryDto) {
+    try {
+      const newDevice =
+        await this.inventoryService.addInventory(createInventoryDto);
+      return { message: 'Device added successfully', newDevice };
+    } catch (error) {
+      throw new HttpException(
+        'Error adding inventory',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
