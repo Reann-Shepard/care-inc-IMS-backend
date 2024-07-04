@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from '../prisma/prisma.module';
@@ -32,9 +32,15 @@ import { OrderManufacturerModule } from '../order-manufacturer/order-manufacture
 import { OrderManufacturerController } from '../order-manufacturer/order-manufacturer.controller';
 import { OrderManufacturerService } from '../order-manufacturer/order-manufacturer.service';
 import { UserModule } from '../users/users.module';
+import { AuthModule } from '../auth/auth.module';
+import { LoggerMiddleware } from 'src/middleware/logger.middleware';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '../../.env',
+      isGlobal: true,
+    }),
     PrismaModule,
     DeviceModule,
     ConfigModule.forRoot(),
@@ -44,6 +50,7 @@ import { UserModule } from '../users/users.module';
     RepairModule,
     OrderManufacturerModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [
     AppController,
@@ -73,4 +80,8 @@ import { UserModule } from '../users/users.module';
     OrderManufacturerService,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
