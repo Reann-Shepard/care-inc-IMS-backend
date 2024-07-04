@@ -9,6 +9,7 @@ async function bootstrap() {
     origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept, Authorization',
+    credentials: true,
   });
   const config = new DocumentBuilder()
     .setTitle('Care INC API Server')
