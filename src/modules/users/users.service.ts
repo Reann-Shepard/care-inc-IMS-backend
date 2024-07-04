@@ -45,4 +45,8 @@ export class UserService {
     const user = await this.userRepository.deleteUser(id);
     return plainToClass(UserDto, user);
   }
+
+  async findOne(name: string): Promise<UserDto | undefined> {
+    return await this.userRepository.getUserByName(name);
+  }
 }
