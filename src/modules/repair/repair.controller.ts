@@ -1,6 +1,6 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Param } from '@nestjs/common';
 import { RepairService } from './repair.service';
-import { Prisma } from '@prisma/client';
+import { Repair } from '@prisma/client';
 
 @Controller('repair')
 export class RepairController {
@@ -10,6 +10,15 @@ export class RepairController {
   getAllRepairs() {
     try {
       return this.repairService.getAllRepairs();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Get(':id')
+  async getRepairById(@Param('id') id: string): Promise<Repair> {
+    try {
+      return this.repairService.getRepairById(Number(id));
     } catch (error) {
       console.log(error);
     }

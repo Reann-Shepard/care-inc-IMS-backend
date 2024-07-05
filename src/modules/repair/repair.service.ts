@@ -10,6 +10,12 @@ export class RepairService {
     return this.prisma.repair.findMany();
   }
 
+  async getRepairById(id: number) {
+    return this.prisma.repair.findUnique({
+      where: { id: Number(id) },
+    });
+  }
+
   // async createRepair(clientId:number, manufacturerId, data: Prisma.RepairCreateInput){
   //   try{
   //     const client = await this.prisma.client.findUnique({
