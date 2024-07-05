@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { CreateRepairDto } from './dtos/createRepair.dto';
 
 @Injectable()
 export class RepairService {
@@ -16,29 +17,30 @@ export class RepairService {
     });
   }
 
-  // async createRepair(clientId:number, manufacturerId, data: Prisma.RepairCreateInput){
-  //   try{
-  //     const client = await this.prisma.client.findUnique({
-  //       where: {clientId}
-  //     });
-  //     const manufacturer = await this.prisma.manufacturer.findUnique({
-  //       where: {manufacturerId}
-  //     });
-
-  //     if(client && manufacturer){
-  //       const repair = this.prisma.repair.create({
-  //         data: {
-  //           ...data,
-  //           client: {
-  //             connect: { clientId },
-  //           },
-  //         }
-
-  //       });
-  //       return repair;
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
+  async createRepair(data: CreateRepairDto) {
+    try {
+      const repair = this.prisma.repair.create({
+        data: {
+          ...data,
+          client: {
+            connect: { id: data.client },
+          },
+          manufacturer: {
+            connect: { id: data.manufacturer },
+          },
+          repairDevices: {
+            create: data.repairDevices.map((device) => ({
+              device: { connect: { id: device } },
+            })),
+          },
+        },
+        include: { repairDevices: true },
+      });
+      return repair;
+    } catch (error) {
+      console.log(error);
+      console.error('Error creating repair:', error); // Log the error
+      throw new BadRequestException('Failed to create repair');
+    }
+  }
 }
-// }
