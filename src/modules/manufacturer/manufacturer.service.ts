@@ -8,4 +8,12 @@ export class ManufacturerService {
   async getAllManufacturers() {
     return this.prisma.manufacturer.findMany();
   }
+
+  async getManufacturerById(id: number) {
+    return this.prisma.manufacturer.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
 }
