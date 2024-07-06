@@ -5,23 +5,23 @@ export async function seedOrderManufacturers() {
   const orderManufacturers = [
     {
       orderDate: new Date('2024-01-01'),
-      amount: 100,
+      amount: 1,
     },
     {
       orderDate: new Date('2024-02-01'),
-      amount: 55,
+      amount: 1,
     },
     {
       orderDate: new Date('2024-03-01'),
-      amount: 60,
+      amount: 1,
     },
     {
       orderDate: new Date('2024-04-01'),
-      amount: 65,
+      amount: 1,
     },
     {
       orderDate: new Date('2024-05-01'),
-      amount: 80,
+      amount: 1,
     },
   ];
 
