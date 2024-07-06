@@ -77,19 +77,21 @@ export class InventoryService {
       },
     });
 
-    const pakageCounts = result.reduce((acc, pkg) => {
-      const manufacturer = pkg.devices[0].manufacturer.name;
+    const packageCounts = result.reduce((acc, pkg) => {
+      if (pkg.devices.length > 0 && pkg.devices[0].manufacturer) {
+        const manufacturer = pkg.devices[0].manufacturer.name;
 
-      if (acc[manufacturer]) {
-        acc[manufacturer]++;
-      } else {
-        acc[manufacturer] = 1;
+        if (acc[manufacturer]) {
+          acc[manufacturer]++;
+        } else {
+          acc[manufacturer] = 1;
+        }
       }
 
       return acc;
     }, {});
 
-    return Object.entries(pakageCounts).map(([name, count]) => ({
+    return Object.entries(packageCounts).map(([name, count]) => ({
       name,
       count,
     }));

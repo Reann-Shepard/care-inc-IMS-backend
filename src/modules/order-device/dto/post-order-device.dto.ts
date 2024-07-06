@@ -1,14 +1,14 @@
 import { IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
-import { DeviceDto } from '../../device/dto/device.dto';
+import { PostDeviceDto } from 'src/modules/device/dto/post-device.dto';
 
-export class OrderDeviceDto {
+export class PostOrderDeviceDto {
   @IsInt()
   deviceId: number;
 
   @IsInt()
   orderManufacturerId: number;
 
-  @Type(() => DeviceDto)
-  device: DeviceDto;
+  @Type(() => PostDeviceDto)
+  device: PostDeviceDto;
 }

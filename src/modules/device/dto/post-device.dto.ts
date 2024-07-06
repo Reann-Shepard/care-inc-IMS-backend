@@ -1,17 +1,15 @@
 import {
-  IsInt,
-  IsString,
-  IsOptional,
-  IsDate,
   IsBoolean,
+  IsDate,
+  IsInt,
+  IsOptional,
+  IsString,
 } from 'class-validator';
 
-export class DeviceDto {
-  @IsInt()
-  id: number;
-
+export class PostDeviceDto {
+  @IsOptional()
   @IsString()
-  serialNumber: string;
+  serialNumber?: string | null;
 
   @IsInt()
   manufacturerId: number;
@@ -22,8 +20,9 @@ export class DeviceDto {
   @IsInt()
   typeId: number;
 
+  @IsOptional()
   @IsDate()
-  stockDate: Date;
+  stockInDate?: Date | null;
 
   @IsOptional()
   @IsDate()

@@ -11,7 +11,7 @@ export class DeviceDto {
   id: number;
 
   @IsString()
-  serialNumber: string;
+  serialNumber: string | null;
 
   @IsInt()
   manufacturerId: number;
@@ -22,12 +22,13 @@ export class DeviceDto {
   @IsInt()
   typeId: number;
 
+  @IsOptional()
   @IsDate()
-  stockDate: Date;
+  stockInDate?: Date | null;
 
   @IsOptional()
   @IsDate()
-  sellDate?: Date;
+  sellDate?: Date | null;
 
   @IsOptional()
   @IsInt()
@@ -35,5 +36,5 @@ export class DeviceDto {
 
   @IsOptional()
   @IsBoolean()
-  deleted?: boolean;
+  deleted?: boolean | null;
 }

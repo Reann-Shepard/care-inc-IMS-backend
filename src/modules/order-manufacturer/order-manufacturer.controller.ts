@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { OrderManufacturerService } from './order-manufacturer.service';
-import { UpdateManufacturerDto } from '../manufacturer/dto/manufacturer.dto';
+import { UpdateOrderManufacturerDto } from './dto/update-order-manufacturer.dto';
+import { PostOrderManufacturerDto } from './dto/post-order-manufacturer.dto';
 
 @Controller('order-manufacturer')
 export class OrderManufacturerController {
@@ -26,19 +27,23 @@ export class OrderManufacturerController {
     }
   }
 
-  @Patch(':id')
-  async updateManufacturer(
+  @Patch('/:id')
+  updateOrderManufacturerById(
     @Param('id') id: number,
-    @Body() updateData: UpdateManufacturerDto,
+    @Body() updateOrderManufacturerDto: UpdateOrderManufacturerDto,
   ) {
-    try {
-      return await this.orderManufacturerService.updateManufacturer(
-        id,
-        updateData,
-      );
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    return this.orderManufacturerService.updateOrderManufacturerById(
+      id,
+      updateOrderManufacturerDto,
+    );
+  }
+
+  @Post()
+  postOrderManufacturer(
+    @Body() postOrderManufacturerDto: PostOrderManufacturerDto,
+  ) {
+    return this.orderManufacturerService.postOrderManufacturer(
+      postOrderManufacturerDto,
+    );
   }
 }
