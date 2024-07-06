@@ -1,5 +1,6 @@
 import {
   IsString,
+  IsInt,
   IsNotEmpty,
   IsDateString,
   IsOptional,
@@ -18,15 +19,15 @@ export class CreateInventoryDto {
   @IsDateString()
   sellDate: string;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  manufacturer: string;
+  manufacturerId: number;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  type: string;
+  typeId: number;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  color: string;
+  color: number;
 }

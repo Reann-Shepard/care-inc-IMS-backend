@@ -129,13 +129,13 @@ export class InventoryService {
           ? new Date(createInventoryDto.sellDate)
           : null,
         color: {
-          connect: { name: createInventoryDto.color },
+          connect: { id: createInventoryDto.colorId },
         },
         manufacturer: {
-          connect: { name: createInventoryDto.manufacturer },
+          connect: { id: createInventoryDto.manufacturerId },
         },
         type: {
-          connect: { name: createInventoryDto.type },
+          connect: { id: createInventoryDto.typeId },
         },
       },
     });
