@@ -25,10 +25,44 @@ import { ClientService } from '../client/client.service';
 import { OrderCustomerController } from '../orderCustomer/orderCustomer.controller';
 import { OrderCustomerService } from '../orderCustomer/orderCustomer.service';
 import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
+import { OrderManufacturerModule } from '../order-manufacturer/order-manufacturer.module';
+import { OrderManufacturerController } from '../order-manufacturer/order-manufacturer.controller';
+import { OrderManufacturerService } from '../order-manufacturer/order-manufacturer.service';
 
 @Module({
-  imports: [PrismaModule, DeviceModule, ConfigModule.forRoot()],
-  controllers: [AppController, DeviceController, ManufacturerController],
-  providers: [AppService, PrismaService, DeviceService, ManufacturerService],
+  imports: [
+    PrismaModule,
+    DeviceModule,
+    ConfigModule.forRoot(),
+    OrderCustomerModule,
+    ManufacturerModule,
+    InventoryModule,
+    OrderManufacturerModule,
+  ],
+  controllers: [
+    AppController,
+    DeviceController,
+    ManufacturerController,
+    InventoryController,
+    PackageController,
+    ColorController,
+    TypeController,
+    ClientController,
+    OrderCustomerController,
+    OrderManufacturerController,
+  ],
+  providers: [
+    AppService,
+    PrismaService,
+    DeviceService,
+    ManufacturerService,
+    InventoryService,
+    PackageService,
+    ColorService,
+    TypeService,
+    ClientService,
+    OrderCustomerService,
+    OrderManufacturerService,
+  ],
 })
 export class AppModule {}
