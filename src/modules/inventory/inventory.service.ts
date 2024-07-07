@@ -6,6 +6,12 @@ import { CreateInventoryDto } from './dto/create-inventory.dto';
 export class InventoryService {
   constructor(private prisma: PrismaService) {}
 
+  /**
+   * Retrieves the current count of devices in inventory that haven't been sold.
+   *
+   * @returns Promise<number> - Number of devices in current inventory.
+   */
+
   async getCurrentInventoryCount(): Promise<number> {
     const count = await this.prisma.device.count({
       where: {
@@ -14,6 +20,13 @@ export class InventoryService {
     });
     return count;
   }
+
+  /**
+   * Retrieves details of devices currently in inventory that haven't been sold.
+   * Includes device ID, serial number, and manufacturer name.
+   *
+   * @returns Promise<{ id: number; serialNumber: string; name: string }[]> - Array of devices in inventory.
+   */
 
   async getCurrentInventory(): Promise<
     { id: number; serialNumber: string; name: string }[]
@@ -39,6 +52,12 @@ export class InventoryService {
       name: device.manufacturer.name,
     }));
   }
+
+  /**
+   * Retrieves the count of devices grouped by manufacturer.
+   *
+   * @returns Promise<{ name: string; count: number }[]> - Array of objects containing manufacturer names and their device counts.
+   */
 
   async getDeviceCountByMfr(): Promise<{ name: string; count: number }[]> {
     const devices = await this.prisma.device.groupBy({
@@ -66,6 +85,12 @@ export class InventoryService {
 
     return result;
   }
+
+  /**
+   * Retrieves the count of packages by manufacturer based on connected devices.
+   *
+   * @returns Promise<{ name: string; count: number }[]> - Array of objects containing manufacturer names and their package counts.
+   */
 
   async getPackageCountByMfr() {
     const result = await this.prisma.package.findMany({
@@ -98,7 +123,12 @@ export class InventoryService {
     }));
   }
 
-  async getAlterationCountByMfr() {
+  /**
+   * Retrieves the count of alterations (repairs) by manufacturer.
+   *
+   * @returns Promise<{ name: string; count: number }[]> - Array of objects containing manufacturer names and their alteration counts.
+   */
+  async getAlterationCountByMfr(): Promise<{ name: string; count: number }[]> {
     const result = await this.prisma.repair.groupBy({
       by: ['manufacturerId'],
       _count: {
@@ -122,6 +152,13 @@ export class InventoryService {
     return alterationCounts;
   }
 
+  /**
+   * Adds a new device inventory record.
+   *
+   * @param createInventoryDto - DTO containing data to create a new inventory record.
+   * @returns Promise<any> - The newly created device inventory record.
+   */
+
   async addInventory(createInventoryDto: CreateInventoryDto) {
     const newDevice = await this.prisma.device.create({
       data: {
@@ -131,7 +168,7 @@ export class InventoryService {
           ? new Date(createInventoryDto.sellDate)
           : null,
         color: {
-          connect: { id: createInventoryDto.colorId },
+          connect: { id: createInventoryDto.color },
         },
         manufacturer: {
           connect: { id: createInventoryDto.manufacturerId },
