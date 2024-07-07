@@ -25,6 +25,9 @@ import { ClientService } from '../client/client.service';
 import { OrderCustomerController } from '../orderCustomer/orderCustomer.controller';
 import { OrderCustomerService } from '../orderCustomer/orderCustomer.service';
 import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
+import { OrderManufacturerModule } from '../order-manufacturer/order-manufacturer.module';
+import { OrderManufacturerController } from '../order-manufacturer/order-manufacturer.controller';
+import { OrderManufacturerService } from '../order-manufacturer/order-manufacturer.service';
 import { UserModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
 import { LoggerMiddleware } from 'src/middleware/logger.middleware';
@@ -41,8 +44,6 @@ import { LoggerMiddleware } from 'src/middleware/logger.middleware';
     OrderCustomerModule,
     ManufacturerModule,
     InventoryModule,
-    UserModule,
-    AuthModule,
   ],
   controllers: [
     AppController,
@@ -54,6 +55,7 @@ import { LoggerMiddleware } from 'src/middleware/logger.middleware';
     TypeController,
     ClientController,
     OrderCustomerController,
+    OrderManufacturerController,
   ],
   providers: [
     AppService,
@@ -66,6 +68,7 @@ import { LoggerMiddleware } from 'src/middleware/logger.middleware';
     TypeService,
     ClientService,
     OrderCustomerService,
+    OrderManufacturerService,
   ],
 })
 export class AppModule {

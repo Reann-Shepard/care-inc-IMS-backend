@@ -34,7 +34,6 @@ model Manufacturer {
   id                Int                 @id @default(autoincrement())
   name              String
   devices           Device[]
-  OrderManufacturer OrderManufacturer[]
   repair            Repair[]
 
   @@map("manufacturer")
@@ -44,7 +43,6 @@ model Color {
   id                 Int                 @id @default(autoincrement())
   name               String
   devices            Device[]
-  OrderManufacturers OrderManufacturer[]
 
   @@map("color")
 }
@@ -53,20 +51,20 @@ model Type {
   id                 Int                 @id @default(autoincrement())
   name               String
   devices            Device[]
-  OrderManufacturers OrderManufacturer[]
 
   @@map("type")
 }
 
 model Device {
   id             Int            @id @default(autoincrement())
-  serialNumber   String         @unique
+  serialNumber   String?         @unique
   manufacturerId Int
   colorId        Int
   typeId         Int
-  stockInDate    DateTime
+  stockInDate    DateTime?
   sellDate       DateTime?
   packageId      Int?
+  deleted        Boolean?
   OrderDevice    OrderDevice[]
   color          Color          @relation(fields: [colorId], references: [id])
   manufacturer   Manufacturer   @relation(fields: [manufacturerId], references: [id])
@@ -89,15 +87,9 @@ model OrderDevice {
 
 model OrderManufacturer {
   id             Int           @id @default(autoincrement())
-  manufacturerId Int
-  colorId        Int
-  typeId         Int
   orderDate      DateTime
   amount         Int
   OrderDevices   OrderDevice[]
-  color          Color         @relation(fields: [colorId], references: [id])
-  manufacturer   Manufacturer  @relation(fields: [manufacturerId], references: [id])
-  type           Type          @relation(fields: [typeId], references: [id])
 
   @@map("order_manufacturer")
 }
