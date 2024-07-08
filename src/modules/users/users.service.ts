@@ -19,7 +19,7 @@ export class UserService {
     const hashedPassword = await this.hashPassword(createUserDto.password);
     const userCreateInput = { ...createUserDto, password: hashedPassword };
     const user = await this.userRepository.createUser(userCreateInput);
-    return new UserDto(user);
+    return plainToClass(UserDto, user);
   }
 
   async getUserById(id: string) {
