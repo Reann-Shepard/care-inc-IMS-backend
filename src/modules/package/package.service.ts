@@ -16,17 +16,18 @@ export class PackageService {
   ) {
     const filterQuery = Object.keys(filterBy).reduce((acc, key) => {
       if (filterBy[key].length > 0) {
-        if (key === 'fittingDate') {
-          const start = new Date(filterBy[key][0]);
-          const end = new Date(filterBy[key][0]);
-          end.setMonth(end.getMonth() + 1);
-          acc['fittingDate'] = {
-            gte: start,
-            lt: end,
-          };
-        } else {
-          acc[key] = { in: filterBy[key] };
-        }
+        acc[key] = { in: filterBy[key] };
+        // if (key === 'fittingDate') {
+        //   const start = new Date(filterBy[key][0]);
+        //   const end = new Date(filterBy[key][0]);
+        //   end.setMonth(end.getMonth() + 1);
+        //   acc['fittingDate'] = {
+        //     gte: start,
+        //     lt: end,
+        //   };
+        // } else {
+        //   acc[key] = { in: filterBy[key] };
+        // }
       }
       return acc;
     }, {} as any);
@@ -39,9 +40,26 @@ export class PackageService {
     });
   }
 
-  // async create(data: Prisma.PackageCreateInput) {
-  //   return this.prisma.package.create({
-  //     data,
-  //   });
-  // }
+  async getPackageById(id: number) {
+    return this.prisma.package.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  async createPackage(createPackageDto: Prisma.PackageCreateInput) {
+    return this.prisma.package.create({
+      data: createPackageDto,
+    });
+  }
+
+  async updatePackage(id: number, updatePackageDto: Prisma.PackageUpdateInput) {
+    return this.prisma.package.update({
+      where: {
+        id: id,
+      },
+      data: updatePackageDto,
+    });
+  }
 }

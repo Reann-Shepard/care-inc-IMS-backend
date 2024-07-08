@@ -1,6 +1,14 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { PackageService } from './package.service';
-import { Prisma } from '@prisma/client';
+import { Package, Prisma } from '@prisma/client';
 
 @Controller('package')
 export class PackageController {
@@ -27,11 +35,11 @@ export class PackageController {
         ? filterBy.clientId.map((id) => +id)
         : [+filterBy.clientId];
     }
-    if (filterBy.fittingDate) {
-      filter['fittingDate'] = Array.isArray(filterBy.fittingDate)
-        ? filterBy.fittingDate.map((date) => date.slice(0, 7))
-        : [+filterBy.fittingDate.slice(0, 7)];
-    }
+    // if (filterBy.fittingDate) {
+    //   filter['fittingDate'] = Array.isArray(filterBy.fittingDate)
+    //     ? filterBy.fittingDate.map((date) => date.slice(0, 7))
+    //     : [+filterBy.fittingDate.slice(0, 7)];
+    // }
 
     try {
       const sortCon = Array.isArray(sortBy) ? sortBy[0] : sortBy || 'id';
@@ -41,8 +49,25 @@ export class PackageController {
     }
   }
 
-  // @Post()
-  // createPackage(@Body() data: Prisma.PackageCreateInput) {
-  //   return this.packageService.create(data);
-  // }
+  @Get(':id')
+  getPackageById(@Param('id') id: string): Promise<Package> {
+    try {
+      return this.packageService.getPackageById(Number(id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Post()
+  createPackage(@Body() createPackageDto: Prisma.PackageCreateInput) {
+    return this.packageService.createPackage(createPackageDto);
+  }
+
+  @Patch(':id')
+  updatePackage(
+    @Param('id') id: string,
+    @Body() updatePackageDto: Prisma.PackageUpdateInput,
+  ) {
+    return this.packageService.updatePackage(Number(id), updatePackageDto);
+  }
 }
