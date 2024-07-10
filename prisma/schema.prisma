@@ -130,15 +130,15 @@ model OrderCustomer {
 }
 
 model Package {
-  id                 Int           @id @default(autoincrement())
-  clientId           Int
-  fittingDate        DateTime
-  warrantyExpiration DateTime
-  orderCustomerId    Int
+  id                 Int            @id @default(autoincrement())
+  clientId           Int?
+  fittingDate        DateTime?
+  warrantyExpiration DateTime?
+  orderCustomerId    Int?
   comments           String?
   devices            Device[]
-  client             Client        @relation(fields: [clientId], references: [id])
-  orderCustomer      OrderCustomer @relation(fields: [orderCustomerId], references: [id])
+  client             Client?        @relation(fields: [clientId], references: [id])
+  orderCustomer      OrderCustomer? @relation(fields: [orderCustomerId], references: [id])
 
   @@map("package")
 }
