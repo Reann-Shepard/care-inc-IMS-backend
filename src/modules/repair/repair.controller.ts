@@ -2,15 +2,18 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Param,
   Body,
   UsePipes,
   ValidationPipe,
   BadRequestException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { RepairService } from './repair.service';
 import { Repair } from '@prisma/client';
 import { CreateRepairDto } from './dtos/createRepair.dto';
+import { UpdateRepairDto } from './dtos/updateRepair.dto';
 
 @Controller('repair')
 export class RepairController {
@@ -43,5 +46,13 @@ export class RepairController {
       console.log(error);
       throw new BadRequestException('Failed to create repair');
     }
+  }
+
+  @Patch(':id')
+  updateUserById(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateRepairDto,
+  ) {
+    return this.repairService.updateRepair(id, updateUserDto);
   }
 }
