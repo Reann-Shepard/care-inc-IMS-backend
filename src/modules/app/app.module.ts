@@ -25,6 +25,9 @@ import { ClientService } from '../client/client.service';
 import { OrderCustomerController } from '../orderCustomer/orderCustomer.controller';
 import { OrderCustomerService } from '../orderCustomer/orderCustomer.service';
 import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
+import { RepairController } from '../repair/repair.controller';
+import { RepairService } from '../repair/repair.service';
+import { RepairModule } from '../repair/repair.module';
 import { OrderManufacturerModule } from '../order-manufacturer/order-manufacturer.module';
 import { OrderManufacturerController } from '../order-manufacturer/order-manufacturer.controller';
 import { OrderManufacturerService } from '../order-manufacturer/order-manufacturer.service';
@@ -37,6 +40,7 @@ import { OrderManufacturerService } from '../order-manufacturer/order-manufactur
     OrderCustomerModule,
     ManufacturerModule,
     InventoryModule,
+    RepairModule,
     OrderManufacturerModule,
   ],
   controllers: [
@@ -49,6 +53,7 @@ import { OrderManufacturerService } from '../order-manufacturer/order-manufactur
     TypeController,
     ClientController,
     OrderCustomerController,
+    RepairController,
     OrderManufacturerController,
   ],
   providers: [
@@ -62,6 +67,7 @@ import { OrderManufacturerService } from '../order-manufacturer/order-manufactur
     TypeService,
     ClientService,
     OrderCustomerService,
+    RepairService,
     OrderManufacturerService,
   ],
 })

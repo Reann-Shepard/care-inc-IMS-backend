@@ -16,9 +16,9 @@ export class ManufacturerController {
   }
 
   @Get(':id')
-  async getThisManufacturer(@Param('id') id: string): Promise<Manufacturer> {
+  async getManufacturerById(@Param('id') id: string): Promise<Manufacturer> {
     try {
-      return this.manufacturerService.getThisManufacturer(Number(id));
+      return this.manufacturerService.getManufacturerById(Number(id));
     } catch (error) {
       console.log(error);
     }

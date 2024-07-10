@@ -6,7 +6,6 @@ import { Prisma } from '@prisma/client';
 export class DeviceService {
   constructor(private prisma: PrismaService) {}
 
-  // Example. Any one can delete this
   async getAllDevices() {
     return this.prisma.device.findMany();
   }

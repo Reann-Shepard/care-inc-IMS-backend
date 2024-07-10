@@ -8,4 +8,12 @@ export class ClientService {
   async getAllClients() {
     return this.prisma.client.findMany();
   }
+
+  async getClientById(id: number) {
+    return this.prisma.client.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
 }
