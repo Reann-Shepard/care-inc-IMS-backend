@@ -28,6 +28,9 @@ import { OrderCustomerModule } from '../orderCustomer/orderCustomer.module';
 import { RepairController } from '../repair/repair.controller';
 import { RepairService } from '../repair/repair.service';
 import { RepairModule } from '../repair/repair.module';
+import { OrderManufacturerModule } from '../order-manufacturer/order-manufacturer.module';
+import { OrderManufacturerController } from '../order-manufacturer/order-manufacturer.controller';
+import { OrderManufacturerService } from '../order-manufacturer/order-manufacturer.service';
 
 @Module({
   imports: [
@@ -38,6 +41,7 @@ import { RepairModule } from '../repair/repair.module';
     ManufacturerModule,
     InventoryModule,
     RepairModule,
+    OrderManufacturerModule,
   ],
   controllers: [
     AppController,
@@ -50,6 +54,7 @@ import { RepairModule } from '../repair/repair.module';
     ClientController,
     OrderCustomerController,
     RepairController,
+    OrderManufacturerController,
   ],
   providers: [
     AppService,
@@ -63,6 +68,7 @@ import { RepairModule } from '../repair/repair.module';
     ClientService,
     OrderCustomerService,
     RepairService,
+    OrderManufacturerService,
   ],
 })
 export class AppModule {}
