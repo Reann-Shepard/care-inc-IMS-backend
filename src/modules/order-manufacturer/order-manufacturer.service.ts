@@ -32,7 +32,7 @@ export class OrderManufacturerService {
 
   async getOrderManufacturerById(id: number) {
     return this.prisma.orderManufacturer.findUnique({
-      where: { id },
+      where: { id: Number(id) },
       select: {
         id: true,
         amount: true,
@@ -59,6 +59,45 @@ export class OrderManufacturerService {
     });
   }
 
+  // async updateOrderManufacturerById(
+  //   id: number,
+  //   updateOrderManufacturerDto: UpdateOrderManufacturerDto,
+  // ) {
+  //   const { OrderDevices = [], ...orderManufacturerData } =
+  //     updateOrderManufacturerDto;
+
+  //   try {
+  //     await this.prisma.orderManufacturer.update({
+  //       where: { id: Number(id) },
+  //       data: orderManufacturerData,
+  //     });
+
+  //     for (const orderDevice of OrderDevices) {
+  //       await this.prisma.orderDevice.update({
+  //         where: {
+  //           deviceId_orderManufacturerId: {
+  //             deviceId: Number(orderDevice.deviceId),
+  //             orderManufacturerId: Number(id),
+  //           },
+  //         },
+  //         data: {
+  //           device: {
+  //             update: {
+  //               ...orderDevice.device,
+  //             },
+  //           },
+  //         },
+  //       });
+  //     }
+
+  //     return this.getOrderManufacturerById(Number(id));
+  //   } catch (error) {
+  //     console.error('Error updating order manufacturer:', error);
+  //     throw new InternalServerErrorException(
+  //       'Failed to update order manufacturer',
+  //     );
+  //   }
+  // }
   async updateOrderManufacturerById(
     id: number,
     updateOrderManufacturerDto: UpdateOrderManufacturerDto,
@@ -73,21 +112,25 @@ export class OrderManufacturerService {
       });
 
       for (const orderDevice of OrderDevices) {
-        await this.prisma.orderDevice.update({
-          where: {
-            deviceId_orderManufacturerId: {
-              deviceId: Number(orderDevice.deviceId),
-              orderManufacturerId: Number(id),
-            },
-          },
-          data: {
-            device: {
-              update: {
-                ...orderDevice.device,
+        const { deviceId, orderManufacturerId, device } = orderDevice;
+
+        if (deviceId && orderManufacturerId) {
+          await this.prisma.orderDevice.update({
+            where: {
+              deviceId_orderManufacturerId: {
+                deviceId: Number(deviceId),
+                orderManufacturerId: Number(orderManufacturerId),
               },
             },
-          },
-        });
+            data: {
+              device: {
+                update: {
+                  ...device,
+                },
+              },
+            },
+          });
+        }
       }
 
       return this.getOrderManufacturerById(Number(id));
