@@ -52,7 +52,7 @@ export class InventoryController {
   }
 
   // Endpoint to add a new device to the inventory.
-  @Post('add')
+  @Post('add_inventory')
   async addInventory(@Body() createInventoryDto: CreateInventoryDto) {
     try {
       const newDevice =
