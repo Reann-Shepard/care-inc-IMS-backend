@@ -8,4 +8,12 @@ export class TypeService {
   async getAllTypes() {
     return this.prisma.type.findMany();
   }
+
+  async getThisType(id: number) {
+    return this.prisma.type.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }

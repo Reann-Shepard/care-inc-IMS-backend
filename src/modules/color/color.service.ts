@@ -8,4 +8,12 @@ export class ColorService {
   async getAllColors() {
     return this.prisma.color.findMany();
   }
+
+  async getColorById(id: number) {
+    return this.prisma.color.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+  }
 }

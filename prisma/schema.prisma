@@ -103,7 +103,7 @@ model Repair {
   receivedDate   DateTime?
   client         Client         @relation(fields: [clientId], references: [id])
   manufacturer   Manufacturer   @relation(fields: [manufacturerId], references: [id])
-  repairDevices  RepairDevice[]
+  repairDevices  RepairDevice[] @relation("RepairDevicesOnRepairs")
 
   @@map("repair")
 }
@@ -112,8 +112,8 @@ model RepairDevice {
   id       Int    @id @default(autoincrement())
   repairId Int
   deviceId Int
+  repair   Repair @relation("RepairDevicesOnRepairs", fields: [repairId], references: [id])
   device   Device @relation(fields: [deviceId], references: [id])
-  repair   Repair @relation(fields: [repairId], references: [id])
 
   @@map("repair_device")
 }
@@ -130,15 +130,15 @@ model OrderCustomer {
 }
 
 model Package {
-  id                 Int           @id @default(autoincrement())
-  clientId           Int
-  fittingDate        DateTime
-  warrantyExpiration DateTime
-  orderCustomerId    Int
+  id                 Int            @id @default(autoincrement())
+  clientId           Int?
+  fittingDate        DateTime?
+  warrantyExpiration DateTime?
+  orderCustomerId    Int?
   comments           String?
   devices            Device[]
-  client             Client        @relation(fields: [clientId], references: [id])
-  orderCustomer      OrderCustomer @relation(fields: [orderCustomerId], references: [id])
+  client             Client?        @relation(fields: [clientId], references: [id])
+  orderCustomer      OrderCustomer? @relation(fields: [orderCustomerId], references: [id])
 
   @@map("package")
 }

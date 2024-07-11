@@ -2,10 +2,13 @@ import {
   BadRequestException,
   Controller,
   Get,
-  InternalServerErrorException,
   Query,
+  Body,
+  Param,
+  Patch,
 } from '@nestjs/common';
 import { DeviceService } from './device.service';
+import { Device, Prisma } from '@prisma/client';
 
 @Controller('device')
 export class DeviceController {
@@ -31,5 +34,22 @@ export class DeviceController {
       throw new BadRequestException('Serial Number already exists');
     }
     return { message: 'Serial Number is unique' };
+  }
+
+  @Get(':id')
+  async getDeviceById(@Param('id') id: string): Promise<Device> {
+    try {
+      return this.deviceService.getDeviceById(Number(id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  @Patch(':id')
+  updateDevice(
+    @Param('id') id: string,
+    @Body() updateDeviceDto: Prisma.DeviceUpdateInput,
+  ) {
+    return this.deviceService.updateDevice(Number(id), updateDeviceDto);
   }
 }
