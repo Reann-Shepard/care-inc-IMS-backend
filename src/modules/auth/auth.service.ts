@@ -24,7 +24,7 @@ export class AuthService {
 
     const access_token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '15m',
+      expiresIn: '2h',
     });
     const refresh_token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
@@ -55,7 +55,7 @@ export class AuthService {
 
   async verifyToken(token: string): Promise<void> {
     try {
-      this.jwtService.verify(token);
+      this.jwtService.verify(token, { secret: process.env.JWT_SECRET });
     } catch (error) {
       throw new UnauthorizedException('Invalid token');
     }

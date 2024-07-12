@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from '../prisma/prisma.module';
@@ -13,7 +13,6 @@ import { InventoryModule } from '../inventory/inventory.module';
 import { ManufacturerModule } from '../manufacturer/manufacturer.module';
 import { InventoryController } from '../inventory/inventory.controller';
 import { InventoryService } from '../inventory/inventory.service';
-// import { PackageModule } from '../package/package.module';
 import { PackageController } from '../package/package.controller';
 import { PackageService } from '../package/package.service';
 import { ColorController } from '../color/color.controller';
@@ -34,6 +33,7 @@ import { OrderManufacturerService } from '../order-manufacturer/order-manufactur
 import { UserModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
 import { LoggerMiddleware } from 'src/middleware/logger.middleware';
+import { AuthMiddleware } from '../auth/auth.middleware';
 
 @Module({
   imports: [
@@ -83,5 +83,14 @@ import { LoggerMiddleware } from 'src/middleware/logger.middleware';
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
+
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'auth/login', method: RequestMethod.POST },
+        { path: 'auth/refresh', method: RequestMethod.POST },
+        { path: 'auth/verify-token', method: RequestMethod.POST },
+      )
+      .forRoutes('*');
   }
 }
