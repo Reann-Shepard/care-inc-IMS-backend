@@ -38,12 +38,4 @@ export class ColorService {
   async deleteColor(id: number) {
     return this.prismaService.color.delete({ where: { id } });
   }
-
-  async getColorById(id: number) {
-    return this.prisma.color.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-  }
 }

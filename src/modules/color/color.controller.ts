@@ -13,7 +13,6 @@ import { ColorService } from './color.service';
 import { CreateColorDto } from './dto/create-color.dto';
 import { UpdateColorDto } from './dto/update-color.dto';
 import { ColorDto } from './dto/color.dto';
-import { Color } from '@prisma/client';
 
 @Controller('color')
 export class ColorController {
@@ -58,7 +57,7 @@ export class ColorController {
     try {
       return this.colorService.createColor(createColorDto);
     } catch (error) {
-      console.log(error);
+      throw new HttpException('Color not created', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -70,7 +69,7 @@ export class ColorController {
     try {
       return this.colorService.updateColor(id, updateColorDto);
     } catch (error) {
-      console.log(error);
+      throw new HttpException('Color not updated', HttpStatus.BAD_REQUEST);
     }
   }
 }
