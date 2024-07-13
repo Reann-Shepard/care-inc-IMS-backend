@@ -13,10 +13,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  MANAGER
+  USER
+}
+
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String @unique
+  id       String                     @id @default(uuid())
+  name     String                     @unique
   password String
+  role     Role                       @default(USER)
+  email    String                     @unique
+  phone    String                     @unique
 
   @@map("user")
 }
