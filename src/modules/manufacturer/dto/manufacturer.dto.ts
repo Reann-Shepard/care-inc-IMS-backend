@@ -1,6 +1,5 @@
-import { IsString } from 'class-validator';
-
-export class UpdateManufacturerDto {
-  @IsString()
+/* Basic Dto usually used by GET */
+export class ManufacturerDto {
+  id: number;
   name: string;
 }
