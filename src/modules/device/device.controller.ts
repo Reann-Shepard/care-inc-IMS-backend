@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { Device, Prisma } from '@prisma/client';
 
@@ -29,6 +37,19 @@ export class DeviceController {
     @Param('id') id: string,
     @Body() updateDeviceDto: Prisma.DeviceUpdateInput,
   ) {
-    return this.deviceService.updateDevice(Number(id), updateDeviceDto);
+    try {
+      return this.deviceService.updateDevice(Number(id), updateDeviceDto);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Post()
+  createDevice(@Body() createDeviceDto: Prisma.DeviceCreateInput) {
+    try {
+      return this.deviceService.createDevice(createDeviceDto);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
   }
 }

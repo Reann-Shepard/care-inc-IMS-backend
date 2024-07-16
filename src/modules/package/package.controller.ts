@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
   Param,
   Patch,
   Post,
@@ -15,7 +16,11 @@ export class PackageController {
   constructor(private readonly packageService: PackageService) {}
   @Get()
   getAllPackages() {
-    return this.packageService.getAllPackages();
+    try {
+      return this.packageService.getAllPackages();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
   }
 
   @Get('sorted-filtered')
@@ -45,7 +50,7 @@ export class PackageController {
       const sortCon = Array.isArray(sortBy) ? sortBy[0] : sortBy || 'id';
       return this.packageService.getAllPackagesSortedFiltered(sortCon, filter);
     } catch (error) {
-      console.log(error);
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -54,13 +59,17 @@ export class PackageController {
     try {
       return this.packageService.getPackageById(Number(id));
     } catch (error) {
-      console.log(error);
+      throw new HttpException(error.message, error.status);
     }
   }
 
   @Post()
   createPackage(@Body() createPackageDto: Prisma.PackageCreateInput) {
-    return this.packageService.createPackage(createPackageDto);
+    try {
+      return this.packageService.createPackage(createPackageDto);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
   }
 
   @Patch(':id')
@@ -68,6 +77,10 @@ export class PackageController {
     @Param('id') id: string,
     @Body() updatePackageDto: Prisma.PackageUpdateInput,
   ) {
-    return this.packageService.updatePackage(Number(id), updatePackageDto);
+    try {
+      return this.packageService.updatePackage(Number(id), updatePackageDto);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
   }
 }

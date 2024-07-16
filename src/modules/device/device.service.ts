@@ -26,4 +26,10 @@ export class DeviceService {
       data: updateDeviceDto,
     });
   }
+
+  async createDevice(createDeviceDto: Prisma.DeviceCreateInput) {
+    return this.prisma.device.create({
+      data: createDeviceDto,
+    });
+  }
 }
