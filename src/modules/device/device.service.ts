@@ -10,6 +10,22 @@ export class DeviceService {
     return this.prisma.device.findMany();
   }
 
+  async checkDuplicateSerialNumber(serialNumber: string) {
+    if (!serialNumber) {
+      return false;
+    }
+
+    try {
+      const existingDevice = await this.prisma.device.findUnique({
+        where: { serialNumber },
+      });
+      return existingDevice !== null;
+    } catch (error) {
+      console.error('Error finding unique serial number:', error);
+      throw new Error('Error finding unique serial number');
+    }
+  }
+
   async getDeviceById(id: number) {
     return this.prisma.device.findUnique({
       where: {

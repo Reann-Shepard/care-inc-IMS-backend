@@ -1,11 +1,12 @@
 import {
-  Body,
+  BadRequestException,
   Controller,
   Get,
-  HttpException,
+  Query,
+  Body,
   Param,
   Patch,
-  Post,
+  HttpException,
 } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { Device, Prisma } from '@prisma/client';
@@ -21,6 +22,19 @@ export class DeviceController {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  @Get('check-serial-number')
+  async checkSerialNumber(@Query('serialNumber') serialNumber: string) {
+    if (!serialNumber) {
+      throw new BadRequestException('Serial Number must be provided');
+    }
+    const isDuplicate =
+      await this.deviceService.checkDuplicateSerialNumber(serialNumber);
+    if (isDuplicate) {
+      throw new BadRequestException('Serial Number already exists');
+    }
+    return { message: 'Serial Number is unique' };
   }
 
   @Get(':id')
@@ -44,12 +58,12 @@ export class DeviceController {
     }
   }
 
-  @Post()
-  createDevice(@Body() createDeviceDto: Prisma.DeviceCreateInput) {
-    try {
-      return this.deviceService.createDevice(createDeviceDto);
-    } catch (error) {
-      throw new HttpException(error.message, error.status);
-    }
-  }
+  // @Post()
+  // createDevice(@Body() createDeviceDto: Prisma.DeviceCreateInput) {
+  //   try {
+  //     return this.deviceService.createDevice(createDeviceDto);
+  //   } catch (error) {
+  //     throw new HttpException(error.message, error.status);
+  //   }
+  // }
 }

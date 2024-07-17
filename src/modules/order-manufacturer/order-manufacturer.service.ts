@@ -32,7 +32,7 @@ export class OrderManufacturerService {
 
   async getOrderManufacturerById(id: number) {
     return this.prisma.orderManufacturer.findUnique({
-      where: { id },
+      where: { id: Number(id) },
       select: {
         id: true,
         amount: true,
@@ -73,21 +73,25 @@ export class OrderManufacturerService {
       });
 
       for (const orderDevice of OrderDevices) {
-        await this.prisma.orderDevice.update({
-          where: {
-            deviceId_orderManufacturerId: {
-              deviceId: Number(orderDevice.deviceId),
-              orderManufacturerId: Number(id),
-            },
-          },
-          data: {
-            device: {
-              update: {
-                ...orderDevice.device,
+        const { deviceId, orderManufacturerId, device } = orderDevice;
+
+        if (deviceId && orderManufacturerId) {
+          await this.prisma.orderDevice.update({
+            where: {
+              deviceId_orderManufacturerId: {
+                deviceId: Number(deviceId),
+                orderManufacturerId: Number(orderManufacturerId),
               },
             },
-          },
-        });
+            data: {
+              device: {
+                update: {
+                  ...device,
+                },
+              },
+            },
+          });
+        }
       }
 
       return this.getOrderManufacturerById(Number(id));
