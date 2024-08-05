@@ -34,6 +34,8 @@ import { UserModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
 import { LoggerMiddleware } from 'src/middleware/logger.middleware';
 import { AuthMiddleware } from '../auth/auth.middleware';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from 'src/middleware/roles.guard';
 
 @Module({
   imports: [
@@ -78,6 +80,14 @@ import { AuthMiddleware } from '../auth/auth.middleware';
     OrderCustomerService,
     RepairService,
     OrderManufacturerService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
 export class AppModule {
