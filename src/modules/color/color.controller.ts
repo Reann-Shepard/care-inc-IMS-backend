@@ -13,6 +13,8 @@ import { ColorService } from './color.service';
 import { CreateColorDto } from './dto/create-color.dto';
 import { UpdateColorDto } from './dto/update-color.dto';
 import { ColorDto } from './dto/color.dto';
+import { Roles } from 'src/middleware/roles.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('color')
 export class ColorController {
@@ -53,6 +55,7 @@ export class ColorController {
   }
 
   @Post()
+  @Roles(Role.ADMIN, Role.MANAGER)
   async createColor(@Body() createColorDto: CreateColorDto) {
     try {
       return this.colorService.createColor(createColorDto);
@@ -62,6 +65,7 @@ export class ColorController {
   }
 
   @Put(':id')
+  @Roles(Role.ADMIN, Role.MANAGER)
   async updateColor(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateColorDto: UpdateColorDto,

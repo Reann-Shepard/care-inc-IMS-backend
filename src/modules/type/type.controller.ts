@@ -10,10 +10,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { TypeService } from './type.service';
-import { Type } from '@prisma/client';
+import { Role, Type } from '@prisma/client';
 import { TypeDto } from './dto/type.dto';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
+import { Roles } from 'src/middleware/roles.decorator';
 
 @Controller('type')
 export class TypeController {
@@ -55,6 +56,7 @@ export class TypeController {
   }
 
   @Post()
+  @Roles(Role.ADMIN, Role.MANAGER)
   async CreateTypeDto(@Body() createTypeDto: CreateTypeDto) {
     try {
       return this.typeService.createType(createTypeDto);
@@ -64,6 +66,7 @@ export class TypeController {
   }
 
   @Put(':id')
+  @Roles(Role.ADMIN, Role.MANAGER)
   async updateType(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateTypeDto: UpdateTypeDto,
