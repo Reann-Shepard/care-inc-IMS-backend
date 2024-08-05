@@ -24,13 +24,11 @@ export class AuthService {
 
     const access_token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
-      // expiresIn: '2h',
-      expiresIn: '3m', // Access token expires in 3 minutes
+      expiresIn: '30m', // Access token expires in 30 minutes
     });
     const refresh_token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '5d',
-      // expiresIn: '8h', // Refresh token expires in 8 hours
+      expiresIn: '8h', // Refresh token expires in 8 hours
     });
 
     return {
@@ -48,8 +46,7 @@ export class AuthService {
           name: payload.name,
           roles: payload.roles,
         },
-        // { expiresIn: '15m' },
-        { expiresIn: '3m' }, // Access token expires in 3 minutes
+        { expiresIn: '30m' }, // Access token expires in 30 minutes
       );
       return newAccessToken;
     } catch (error) {

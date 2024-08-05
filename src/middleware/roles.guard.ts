@@ -16,26 +16,29 @@ export class RolesGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
+
     if (!requiredRoles) {
+      console.log('No roles required');
       return true;
     }
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    // const user = await this.prismaService.user.findUnique({
-    //   where: { id: request.user.id },
-    // });
+
     if (!user) {
+      console.log('No user found');
       return false;
     }
 
     const foundUser = await this.prismaService.user.findUnique({
-      where: { id: user.sub }, // JWT 토큰의 sub 필드를 사용하여 사용자 검색
+      where: { id: user.sub },
     });
     if (!foundUser) {
+      console.log('User not found in database, access denied');
       return false;
     }
 
-    return requiredRoles.includes(user.role);
+    const hasRole = requiredRoles.includes(foundUser.role);
+    return hasRole;
   }
 }
