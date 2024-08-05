@@ -41,6 +41,7 @@ export class UserController {
 
       return await this.userService.createUser(createUserDto);
     } catch (error) {
+      console.error('Error creating user:', error);
       throw new HttpException('Error creating user', HttpStatus.BAD_REQUEST);
     }
   }
