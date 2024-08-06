@@ -17,17 +17,6 @@ export class PackageService {
     const filterQuery = Object.keys(filterBy).reduce((acc, key) => {
       if (filterBy[key].length > 0) {
         acc[key] = { in: filterBy[key] };
-        // if (key === 'fittingDate') {
-        //   const start = new Date(filterBy[key][0]);
-        //   const end = new Date(filterBy[key][0]);
-        //   end.setMonth(end.getMonth() + 1);
-        //   acc['fittingDate'] = {
-        //     gte: start,
-        //     lt: end,
-        //   };
-        // } else {
-        //   acc[key] = { in: filterBy[key] };
-        // }
       }
       return acc;
     }, {} as any);

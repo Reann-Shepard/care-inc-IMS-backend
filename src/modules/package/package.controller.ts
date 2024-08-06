@@ -41,11 +41,6 @@ export class PackageController {
         ? filterBy.clientId.map((id) => +id)
         : [+filterBy.clientId];
     }
-    // if (filterBy.fittingDate) {
-    //   filter['fittingDate'] = Array.isArray(filterBy.fittingDate)
-    //     ? filterBy.fittingDate.map((date) => date.slice(0, 7))
-    //     : [+filterBy.fittingDate.slice(0, 7)];
-    // }
 
     try {
       const sortCon = Array.isArray(sortBy) ? sortBy[0] : sortBy || 'id';
