@@ -62,4 +62,22 @@ export class PackageService {
       data: updatePackageDto,
     });
   }
+
+  async removePackageClientInfo(id: number) {
+    return this.prisma.package.update({
+      where: { id: id },
+      data: {
+        clientId: null,
+        fittingDate: null,
+        warrantyExpiration: null,
+        comments: null,
+      },
+    });
+  }
+
+  async deletePackage(id: number) {
+    return this.prisma.package.delete({
+      where: { id: id },
+    });
+  }
 }

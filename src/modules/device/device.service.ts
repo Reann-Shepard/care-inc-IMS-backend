@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { UpdateDeviceDto } from './dto/update-device.dto';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
@@ -34,7 +35,7 @@ export class DeviceService {
     });
   }
 
-  async updateDevice(id: number, updateDeviceDto: Prisma.DeviceUpdateInput) {
+  async updateDevice(id: number, updateDeviceDto: UpdateDeviceDto) {
     return this.prisma.device.update({
       where: {
         id: id,
@@ -43,9 +44,10 @@ export class DeviceService {
     });
   }
 
-  async createDevice(createDeviceDto: Prisma.DeviceCreateInput) {
-    return this.prisma.device.create({
-      data: createDeviceDto,
+  async removeDevicePackageId(id: number) {
+    return this.prisma.device.update({
+      where: { id: id },
+      data: { packageId: null },
     });
   }
 }

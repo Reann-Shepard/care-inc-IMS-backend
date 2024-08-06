@@ -90,6 +90,7 @@ export class AppModule {
         { path: 'auth/login', method: RequestMethod.POST },
         { path: 'auth/refresh', method: RequestMethod.POST },
         { path: 'auth/verify-token', method: RequestMethod.POST },
+        { path: 'users', method: RequestMethod.POST },
       )
       .forRoutes('*');
   }

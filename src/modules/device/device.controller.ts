@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { Device, Prisma } from '@prisma/client';
+import { UpdateDeviceDto } from './dto/update-device.dto';
 
 @Controller('device')
 export class DeviceController {
@@ -49,21 +50,21 @@ export class DeviceController {
   @Patch(':id')
   updateDevice(
     @Param('id') id: string,
-    @Body() updateDeviceDto: Prisma.DeviceUpdateInput,
+    @Body() updateDeviceDto: UpdateDeviceDto,
   ) {
     try {
       return this.deviceService.updateDevice(Number(id), updateDeviceDto);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw Error(error.message);
     }
   }
 
-  // @Post()
-  // createDevice(@Body() createDeviceDto: Prisma.DeviceCreateInput) {
-  //   try {
-  //     return this.deviceService.createDevice(createDeviceDto);
-  //   } catch (error) {
-  //     throw new HttpException(error.message, error.status);
-  //   }
-  // }
+  @Patch(':id/remove-package-id-null')
+  removeDevicePackageIdNull(@Param('id') id: number) {
+    try {
+      return this.deviceService.removeDevicePackageId(Number(id));
+    } catch (error) {
+      throw Error(error.message);
+    }
+  }
 }

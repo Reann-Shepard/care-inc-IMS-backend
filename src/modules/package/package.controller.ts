@@ -2,11 +2,11 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
   Param,
   Patch,
   Post,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { PackageService } from './package.service';
 import { Package, Prisma } from '@prisma/client';
@@ -19,7 +19,8 @@ export class PackageController {
     try {
       return this.packageService.getAllPackages();
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
     }
   }
 
@@ -50,7 +51,8 @@ export class PackageController {
       const sortCon = Array.isArray(sortBy) ? sortBy[0] : sortBy || 'id';
       return this.packageService.getAllPackagesSortedFiltered(sortCon, filter);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
     }
   }
 
@@ -59,7 +61,8 @@ export class PackageController {
     try {
       return this.packageService.getPackageById(Number(id));
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
     }
   }
 
@@ -68,7 +71,8 @@ export class PackageController {
     try {
       return this.packageService.createPackage(createPackageDto);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
     }
   }
 
@@ -80,7 +84,26 @@ export class PackageController {
     try {
       return this.packageService.updatePackage(Number(id), updatePackageDto);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
+    }
+  }
+
+  @Patch(':id/remove-client-info')
+  removePackageClientInfo(@Param('id') id: number) {
+    try {
+      return this.packageService.removePackageClientInfo(Number(id));
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+
+  @Delete(':id')
+  deletePackage(@Param('id') id: string) {
+    try {
+      return this.packageService.deletePackage(Number(id));
+    } catch (error) {
+      throw Error(error);
     }
   }
 }
