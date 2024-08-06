@@ -6,7 +6,6 @@ import {
   Body,
   Param,
   Patch,
-  HttpException,
 } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { Device, Prisma } from '@prisma/client';
