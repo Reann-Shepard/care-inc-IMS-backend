@@ -6,6 +6,7 @@ import {
   Patch,
   Post,
   Query,
+  Delete,
 } from '@nestjs/common';
 import { PackageService } from './package.service';
 import { Package, Prisma } from '@prisma/client';
@@ -15,7 +16,12 @@ export class PackageController {
   constructor(private readonly packageService: PackageService) {}
   @Get()
   getAllPackages() {
-    return this.packageService.getAllPackages();
+    try {
+      return this.packageService.getAllPackages();
+    } catch (error) {
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
+    }
   }
 
   @Get('sorted-filtered')
@@ -35,17 +41,13 @@ export class PackageController {
         ? filterBy.clientId.map((id) => +id)
         : [+filterBy.clientId];
     }
-    // if (filterBy.fittingDate) {
-    //   filter['fittingDate'] = Array.isArray(filterBy.fittingDate)
-    //     ? filterBy.fittingDate.map((date) => date.slice(0, 7))
-    //     : [+filterBy.fittingDate.slice(0, 7)];
-    // }
 
     try {
       const sortCon = Array.isArray(sortBy) ? sortBy[0] : sortBy || 'id';
       return this.packageService.getAllPackagesSortedFiltered(sortCon, filter);
     } catch (error) {
-      console.log(error);
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
     }
   }
 
@@ -54,13 +56,19 @@ export class PackageController {
     try {
       return this.packageService.getPackageById(Number(id));
     } catch (error) {
-      console.log(error);
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
     }
   }
 
   @Post()
   createPackage(@Body() createPackageDto: Prisma.PackageCreateInput) {
-    return this.packageService.createPackage(createPackageDto);
+    try {
+      return this.packageService.createPackage(createPackageDto);
+    } catch (error) {
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
+    }
   }
 
   @Patch(':id')
@@ -68,6 +76,29 @@ export class PackageController {
     @Param('id') id: string,
     @Body() updatePackageDto: Prisma.PackageUpdateInput,
   ) {
-    return this.packageService.updatePackage(Number(id), updatePackageDto);
+    try {
+      return this.packageService.updatePackage(Number(id), updatePackageDto);
+    } catch (error) {
+      // throw new HttpException(error.message, error.status);
+      throw Error(error);
+    }
+  }
+
+  @Patch(':id/remove-client-info')
+  removePackageClientInfo(@Param('id') id: number) {
+    try {
+      return this.packageService.removePackageClientInfo(Number(id));
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+
+  @Delete(':id')
+  deletePackage(@Param('id') id: string) {
+    try {
+      return this.packageService.deletePackage(Number(id));
+    } catch (error) {
+      throw Error(error);
+    }
   }
 }
