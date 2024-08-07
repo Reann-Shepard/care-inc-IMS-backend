@@ -34,18 +34,18 @@ export class DeviceService {
     });
   }
 
-  async updateDevice(id: number, updateDeviceDto: UpdateDeviceDto) {
+  async updateDevice(sn: string, updateDeviceDto: UpdateDeviceDto) {
     return this.prisma.device.update({
       where: {
-        id: id,
+        serialNumber: sn,
       },
       data: updateDeviceDto,
     });
   }
 
-  async removeDevicePackageId(id: number) {
+  async removeDevicePackageId(sn: string) {
     return this.prisma.device.update({
-      where: { id: id },
+      where: { serialNumber: sn },
       data: { packageId: null },
     });
   }
