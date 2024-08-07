@@ -8,7 +8,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { DeviceService } from './device.service';
-import { Device, Prisma } from '@prisma/client';
+import { Device } from '@prisma/client';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 
 @Controller('device')

@@ -20,15 +20,15 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.id, name: user.name };
+    const payload = { sub: user.id, name: user.name, roles: user.role };
 
     const access_token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '2h',
+      expiresIn: '30m', // Access token expires in 30 minutes
     });
     const refresh_token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '5d',
+      expiresIn: '8h', // Refresh token expires in 8 hours
     });
 
     return {
@@ -44,8 +44,9 @@ export class AuthService {
         {
           sub: payload.sub,
           name: payload.name,
+          roles: payload.roles,
         },
-        { expiresIn: '15m' },
+        { expiresIn: '30m' }, // Access token expires in 30 minutes
       );
       return newAccessToken;
     } catch (error) {

@@ -10,9 +10,10 @@ import {
   Put,
 } from '@nestjs/common';
 import { ManufacturerService } from './manufacturer.service';
-import { Manufacturer } from '@prisma/client';
+import { Manufacturer, Role } from '@prisma/client';
 import { CreateManufacturerDto } from './dto/create-manufacturer.dto';
 import { UpdateManufacturerDto } from './dto/update-manufacturer.dto';
+import { Roles } from 'src/middleware/roles.decorator';
 
 @Controller('manufacturer')
 export class ManufacturerController {
@@ -42,6 +43,7 @@ export class ManufacturerController {
   }
 
   @Post()
+  @Roles(Role.ADMIN, Role.MANAGER)
   async createManufacturer(
     @Body() createManufactureDto: CreateManufacturerDto,
   ) {
@@ -56,6 +58,7 @@ export class ManufacturerController {
   }
 
   @Put(':id')
+  @Roles(Role.ADMIN, Role.MANAGER)
   async updateManufacturer(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateManufacturerDto: UpdateManufacturerDto,
