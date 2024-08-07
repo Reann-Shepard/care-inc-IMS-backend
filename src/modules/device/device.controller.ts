@@ -46,22 +46,22 @@ export class DeviceController {
     }
   }
 
-  @Patch(':id')
+  @Patch(':sn')
   updateDevice(
-    @Param('id') id: string,
+    @Param('sn') sn: string,
     @Body() updateDeviceDto: UpdateDeviceDto,
   ) {
     try {
-      return this.deviceService.updateDevice(Number(id), updateDeviceDto);
+      return this.deviceService.updateDevice(sn, updateDeviceDto);
     } catch (error) {
       throw Error(error.message);
     }
   }
 
-  @Patch(':id/remove-package-id-null')
-  removeDevicePackageIdNull(@Param('id') id: number) {
+  @Patch(':sn/remove-package-id-null')
+  removeDevicePackageIdNull(@Param('sn') sn: string) {
     try {
-      return this.deviceService.removeDevicePackageId(Number(id));
+      return this.deviceService.removeDevicePackageId(sn);
     } catch (error) {
       throw Error(error.message);
     }
