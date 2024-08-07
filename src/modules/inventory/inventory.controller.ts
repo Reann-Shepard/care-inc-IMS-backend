@@ -2,12 +2,15 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
+  Param,
   Body,
   HttpException,
-  HttpStatus,
+  BadRequestException,
 } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateInventoryDto } from './dto/create-inventory.dto'; // Import the CreateInventoryDto, will be used to validate the request body when adding a new device to the inventory.
+import { Prisma } from '@prisma/client';
 
 @Controller('inventory') // Set the base path for the InventoryController. All routes in this controller will be prefixed with /inventory.
 export class InventoryController {
@@ -57,12 +60,21 @@ export class InventoryController {
     try {
       const newDevice =
         await this.inventoryService.addInventory(createInventoryDto);
-      return { message: 'Device added successfully', newDevice };
+      return { message: 'Device cannot be added', newDevice };
     } catch (error) {
-      throw new HttpException(
-        'Error adding inventory',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new BadRequestException('Error adding inventory');
+    }
+  }
+
+  @Patch(':id')
+  updateDevice(
+    @Param('id') id: string,
+    @Body() updateDeviceDto: Prisma.DeviceUpdateInput,
+  ) {
+    try {
+      return this.inventoryService.updateDevice(Number(id), updateDeviceDto);
+    } catch (error) {
+      throw new BadRequestException('Error updating device');
     }
   }
 }

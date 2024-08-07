@@ -180,4 +180,20 @@ export class InventoryService {
     });
     return newDevice;
   }
+
+  /**
+   * Updates an existing device inventory record.
+   *
+   * @param id - The ID of the device inventory record to update.
+   * @param updateDeviceDto - DTO containing data to update the device inventory record.
+   * @returns Promise<any> - The updated device inventory record.
+   */
+
+  async updateDevice(id: number, updateDeviceDto: any) {
+    const updatedDevice = await this.prisma.device.update({
+      where: { id },
+      data: updateDeviceDto,
+    });
+    return updatedDevice;
+  }
 }
