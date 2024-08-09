@@ -1,6 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+import { config } from 'dotenv';
+config();
+
 async function resetDatabase() {
   try {
     await prisma.$executeRawUnsafe('TRUNCATE TABLE "device" CASCADE');
@@ -44,9 +47,6 @@ async function resetDatabase() {
       'ALTER SEQUENCE "order_customer_id_seq" RESTART WITH 1',
     );
     await prisma.$executeRawUnsafe('TRUNCATE TABLE "user" CASCADE');
-    await prisma.$executeRawUnsafe(
-      'ALTER SEQUENCE "user_id_seq" RESTART WITH 1',
-    );
     console.log('Database reset successful.');
   } catch (e) {
     console.error('Failed to reset database: ', e);

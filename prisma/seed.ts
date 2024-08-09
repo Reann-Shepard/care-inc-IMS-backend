@@ -13,6 +13,9 @@ import { seedRepairDevices } from './seed/repairDevice';
 
 const prisma = new PrismaClient();
 
+import { config } from 'dotenv';
+config();
+
 async function main() {
   await seedClients();
   await seedManufacturers();
