@@ -8,7 +8,7 @@ export async function seedRepairDevices() {
       deviceId: 1,
     },
     {
-      repairId: 2,
+      repairId: 1,
       deviceId: 2,
     },
     {
@@ -16,12 +16,12 @@ export async function seedRepairDevices() {
       deviceId: 3,
     },
     {
-      repairId: 2,
+      repairId: 1,
       deviceId: 4,
     },
     {
-      repairId: 1,
-      deviceId: 5,
+      repairId: 2,
+      deviceId: 7,
     },
   ];
 

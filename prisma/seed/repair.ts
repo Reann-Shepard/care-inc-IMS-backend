@@ -5,16 +5,16 @@ export async function seedRepairs() {
   const repairs = [
     {
       clientId: 1,
-      manufacturerId: 1,
+      manufacturerId: 2,
       reason: 'battery not charging',
       shippingDate: new Date('2024-04-16'),
       shipId: 'ND6BEF22VMD6DRL5W0B3',
-      receivedDate: null,
+      receivedDate: new Date('2024-04-25'),
     },
     {
       clientId: 2,
-      manufacturerId: 2,
-      reason: 'Faceplate is broken',
+      manufacturerId: 1,
+      reason: 'Broken controller',
       shippingDate: new Date('2024-05-09'),
       shipId: 'ND2HRQ12VNAM2BN2R1A7',
       receivedDate: null,

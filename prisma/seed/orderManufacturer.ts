@@ -4,24 +4,24 @@ const prisma = new PrismaClient();
 export async function seedOrderManufacturers() {
   const orderManufacturers = [
     {
-      orderDate: new Date('2024-01-01'),
-      amount: 1,
+      orderDate: new Date('2022-12-20'),
+      amount: 4,
     },
     {
-      orderDate: new Date('2024-02-01'),
-      amount: 1,
+      orderDate: new Date('2023-01-01'),
+      amount: 4,
     },
     {
-      orderDate: new Date('2024-03-01'),
-      amount: 1,
+      orderDate: new Date('2023-01-02'),
+      amount: 4,
     },
     {
-      orderDate: new Date('2024-04-01'),
-      amount: 1,
+      orderDate: new Date('2024-06-01'),
+      amount: 4,
     },
     {
-      orderDate: new Date('2024-05-01'),
-      amount: 1,
+      orderDate: new Date('2024-06-15'),
+      amount: 3,
     },
   ];
 
